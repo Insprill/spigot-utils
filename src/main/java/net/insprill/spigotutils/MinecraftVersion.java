@@ -81,16 +81,10 @@ public class MinecraftVersion {
         if (matcher.find()) {
             MatchResult matchResult = matcher.toMatchResult();
             if (matchResult.groupCount() >= 2) {
-                try {
-                    major = Integer.parseInt(matchResult.group(2));
-                } catch (Exception ignored) {
-                }
+                major = parseIntSafe(matchResult.group(2));
             }
             if (matchResult.groupCount() >= 3) {
-                try {
-                    patch = Integer.parseInt(matchResult.group(3));
-                } catch (Exception ignored) {
-                }
+                patch = parseIntSafe(matchResult.group(3));
             }
         }
 
@@ -98,10 +92,7 @@ public class MinecraftVersion {
         if (major == 0 && getCraftBukkitVersion() != null) {
             String[] version = getCraftBukkitVersion().split("_");
             if (version.length >= 2) {
-                try {
-                    major = Integer.parseInt(version[1]);
-                } catch (Exception ignored) {
-                }
+                major = parseIntSafe(version[1]);
             }
         }
 
@@ -181,6 +172,20 @@ public class MinecraftVersion {
             return pckg[3];
         }
         return null;
+    }
+
+    /**
+     * Parses an integer from a String, returning 0 if it's not valid.
+     *
+     * @param str The String to parse.
+     * @return The parsed String, or 0 if invalid.
+     */
+    private static int parseIntSafe(String str) {
+        try {
+            return Integer.parseInt(str);
+        } catch (Exception ignored) {
+            return 0;
+        }
     }
 
 }
