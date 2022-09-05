@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.regex.MatchResult;
@@ -70,7 +71,42 @@ public class MinecraftVersion {
     // endregion
 
     @Getter
-    private static final MinecraftVersion currentVersion = MinecraftVersion.findCurrentVersion();
+    private static final MinecraftVersion currentVersion;
+
+    static {
+        int major = 0;
+        int patch = 0;
+
+        Matcher matcher = versionPattern.matcher(Bukkit.getVersion());
+        if (matcher.find()) {
+            MatchResult matchResult = matcher.toMatchResult();
+            if (matchResult.groupCount() >= 2) {
+                try {
+                    major = Integer.parseInt(matchResult.group(2));
+                } catch (Exception ignored) {
+                }
+            }
+            if (matchResult.groupCount() >= 3) {
+                try {
+                    patch = Integer.parseInt(matchResult.group(3));
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        // Fallback to attempt to get major version.
+        if (major == 0 && getCraftBukkitVersion() != null) {
+            String[] version = getCraftBukkitVersion().split("_");
+            if (version.length >= 2) {
+                try {
+                    major = Integer.parseInt(version[1]);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        currentVersion = new MinecraftVersion(major, patch);
+    }
 
     @Getter
     private final int major;
@@ -131,49 +167,6 @@ public class MinecraftVersion {
      */
     public static boolean isOlderThan(MinecraftVersion version) {
         return (currentVersion.getMajor() < version.getMajor()) || (currentVersion.getMajor() == version.getMajor() && currentVersion.getPatch() < version.getPatch());
-    }
-
-    /**
-     * Calculates the Minecraft version the server is running.
-     *
-     * @return The current Minecraft version.
-     */
-    private static MinecraftVersion findCurrentVersion() {
-        int major = 0;
-        int patch = 0;
-
-        Matcher matcher = versionPattern.matcher(Bukkit.getVersion());
-        if (matcher.find()) {
-            MatchResult matchResult = matcher.toMatchResult();
-            if (matchResult.groupCount() >= 2) {
-                try {
-                    major = Integer.parseInt(matchResult.group(2));
-                } catch (Exception ignored) {
-                }
-            }
-            if (matchResult.groupCount() >= 3) {
-                try {
-                    patch = Integer.parseInt(matchResult.group(3));
-                } catch (Exception ignored) {
-                }
-            }
-        }
-
-        // Fallback to attempt to get major version.
-        if (major == 0) {
-            String[] pckg = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
-            if (pckg.length >= 4) {
-                String[] version = pckg[3].split("_");
-                if (version.length >= 2) {
-                    try {
-                        major = Integer.parseInt(version[1]);
-                    } catch (Exception ignored) {
-                    }
-                }
-            }
-        }
-
-        return new MinecraftVersion(major, patch);
     }
 
     /**
