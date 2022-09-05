@@ -12,6 +12,10 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Used to check the Minecraft version the server is running.
+ * Useful when different Minecraft versions require different implementations.
+ */
 @ToString
 @AllArgsConstructor
 @EqualsAndHashCode

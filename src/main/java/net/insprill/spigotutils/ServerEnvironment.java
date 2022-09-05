@@ -3,6 +3,10 @@ package net.insprill.spigotutils;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Used to check the environment the server is running.
+ * Useful when different environments require different implementations.
+ */
 public class ServerEnvironment {
 
     // region Environments
