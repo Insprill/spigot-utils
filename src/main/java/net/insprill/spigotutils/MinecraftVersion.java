@@ -118,6 +118,7 @@ public class MinecraftVersion {
      *
      * @return The display name of the version.
      */
+    @NotNull
     public String getDisplayName() {
         return "1." + major + ((patch == 0) ? "" : "." + patch);
     }
