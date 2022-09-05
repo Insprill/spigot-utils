@@ -86,7 +86,7 @@ public class ServerEnvironment {
      * @return Whether the server is running the given environment, or a fork of it.
      */
     public static boolean isAtLeast(ServerEnvironment environment) {
-        return environment.getOrdinal() >= ServerEnvironment.currentEnvironment.getOrdinal();
+        return ServerEnvironment.currentEnvironment.getOrdinal() >= environment.getOrdinal();
     }
 
 }
