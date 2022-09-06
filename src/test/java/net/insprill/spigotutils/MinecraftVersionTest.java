@@ -1,6 +1,7 @@
 package net.insprill.spigotutils;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
+import org.bukkit.craftbukkit.v1_18_R2.CraftServerMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -164,6 +165,13 @@ class MinecraftVersionTest {
     @Test
     void getCraftBukkitVersion_CannotFind_Null() {
         assertNull(MinecraftVersion.getCraftBukkitVersion());
+    }
+
+    @Test
+    void getCraftBukkitVersion_CorrectVersion() {
+        MockBukkit.unmock();
+        MockBukkit.mock(new CraftServerMock());
+        assertEquals("v1_18_R2", MinecraftVersion.getCraftBukkitVersion());
     }
 
 }
