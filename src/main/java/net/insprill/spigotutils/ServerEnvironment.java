@@ -1,6 +1,8 @@
 package net.insprill.spigotutils;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -42,8 +44,9 @@ public class ServerEnvironment {
         try {
             Class.forName(checkClass);
             this.isCurrentEnvironment = true;
-            if (ordinal > ServerEnvironment.currentEnvironment.getOrdinal()) {
-                ServerEnvironment.currentEnvironment = this;
+            // This may run before the field is initialized, making it possible to be null on the first call.
+            if (getCurrentEnvironment() == null || ordinal > getCurrentEnvironment().getOrdinal()) {
+                setCurrentEnvironment(this);
             }
         } catch (ClassNotFoundException e) {
             this.isCurrentEnvironment = false;
@@ -51,6 +54,8 @@ public class ServerEnvironment {
     }
 
     @Getter
+    @Setter(AccessLevel.PRIVATE)
+    @NotNull
     private static ServerEnvironment currentEnvironment = BUKKIT;
 
     /**
