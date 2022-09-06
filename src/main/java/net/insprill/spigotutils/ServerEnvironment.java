@@ -46,7 +46,7 @@ public class ServerEnvironment {
         try {
             Class.forName(checkClass);
             this.isCurrentEnvironment = true;
-            // This may run before the field is initialized, making it possible to be null on the first call.
+            // Will be null on the first call until initialized.
             if (getCurrentEnvironment() == null || ordinal > getCurrentEnvironment().getOrdinal()) {
                 setCurrentEnvironment(this);
             }
@@ -58,7 +58,7 @@ public class ServerEnvironment {
     @Getter
     @Setter(AccessLevel.PRIVATE)
     @NotNull
-    private static ServerEnvironment currentEnvironment = BUKKIT;
+    private static ServerEnvironment currentEnvironment;
 
     /**
      * @return Whether the server is running Purpur, or a fork of it.
