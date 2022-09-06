@@ -1,5 +1,6 @@
 package net.insprill.spigotutils;
 
+import com.google.common.base.Preconditions;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -129,7 +130,8 @@ public class MinecraftVersion {
      * @param version The version to check.
      * @return Whether the current server version matches the provided version.
      */
-    public static boolean is(MinecraftVersion version) {
+    public static boolean is(@NotNull MinecraftVersion version) {
+        checkNotNull(version);
         return currentVersion.getMajor() == version.getMajor() && currentVersion.getPatch() == version.getPatch();
     }
 
@@ -137,7 +139,8 @@ public class MinecraftVersion {
      * @param version The version to check.
      * @return Whether the current server major version matches the provided major version.
      */
-    public static boolean isMajor(MinecraftVersion version) {
+    public static boolean isMajor(@NotNull MinecraftVersion version) {
+        checkNotNull(version);
         return currentVersion.getMajor() == version.getMajor();
     }
 
@@ -145,7 +148,8 @@ public class MinecraftVersion {
      * @param version The version to check.
      * @return Whether the current server version is newer than the provided version.
      */
-    public static boolean isNewerThan(MinecraftVersion version) {
+    public static boolean isNewerThan(@NotNull MinecraftVersion version) {
+        checkNotNull(version);
         return (currentVersion.getMajor() > version.getMajor()) || (currentVersion.getMajor() == version.getMajor() && currentVersion.getPatch() > version.getPatch());
     }
 
@@ -153,7 +157,8 @@ public class MinecraftVersion {
      * @param version The version to check.
      * @return Whether the current server version is at least the provided version.
      */
-    public static boolean isAtLeast(MinecraftVersion version) {
+    public static boolean isAtLeast(@NotNull MinecraftVersion version) {
+        checkNotNull(version);
         return (currentVersion.getMajor() > version.getMajor()) || (currentVersion.getMajor() == version.getMajor() && currentVersion.getPatch() >= version.getPatch());
     }
 
@@ -161,7 +166,8 @@ public class MinecraftVersion {
      * @param version The version to check.
      * @return Whether the current server version is older than the provided version.
      */
-    public static boolean isOlderThan(MinecraftVersion version) {
+    public static boolean isOlderThan(@NotNull MinecraftVersion version) {
+        checkNotNull(version);
         return (currentVersion.getMajor() < version.getMajor()) || (currentVersion.getMajor() == version.getMajor() && currentVersion.getPatch() < version.getPatch());
     }
 
@@ -190,6 +196,16 @@ public class MinecraftVersion {
         } catch (Exception ignored) {
             return 0;
         }
+    }
+
+    /**
+     * Checks that the provided MinecraftVersion is not null, and throws a
+     * NullPointerException with a custom message if it is.
+     *
+     * @param version The version to check
+     */
+    private static void checkNotNull(MinecraftVersion version) {
+        Preconditions.checkNotNull(version, "Version cannot be null");
     }
 
 }
