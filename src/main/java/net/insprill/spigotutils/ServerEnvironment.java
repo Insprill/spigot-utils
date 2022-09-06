@@ -1,5 +1,6 @@
 package net.insprill.spigotutils;
 
+import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +41,7 @@ public class ServerEnvironment {
      * @param ordinal    The ordinal of the environment, or fork level. (Bukkit is 0, Spigot is 1, Paper is 2, etc).
      */
     public ServerEnvironment(@NotNull String checkClass, int ordinal) {
+        Preconditions.checkNotNull(checkClass, "Check class cannot be null");
         this.ordinal = ordinal;
         try {
             Class.forName(checkClass);
@@ -90,7 +92,8 @@ public class ServerEnvironment {
      * @param environment The environment to check.
      * @return Whether the server is running the given environment, or a fork of it.
      */
-    public static boolean isAtLeast(ServerEnvironment environment) {
+    public static boolean isAtLeast(@NotNull ServerEnvironment environment) {
+        Preconditions.checkNotNull(environment, "Environment cannot be null");
         return getCurrentEnvironment().getOrdinal() >= environment.getOrdinal();
     }
 
@@ -98,7 +101,8 @@ public class ServerEnvironment {
      * @param environment The environment to check.
      * @return Whether the server is running an environment lower than the once specified.
      */
-    public static boolean isLowerThan(ServerEnvironment environment) {
+    public static boolean isLowerThan(@NotNull ServerEnvironment environment) {
+        Preconditions.checkNotNull(environment, "Environment cannot be null");
         return getCurrentEnvironment().getOrdinal() < environment.getOrdinal();
     }
 
