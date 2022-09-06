@@ -37,6 +37,8 @@
 
 ### Implementing in your project
 
+Make sure to replace `VERSION` in the below examples with the version below:  
+
 [![Maven Central][maven-central-shield]][maven-central-url]
 #### Maven
 
@@ -44,15 +46,21 @@
 <dependency>
     <groupId>net.insprill</groupId>
     <artifactId>spigot-utils</artifactId>
-    <version>version</version>
+    <version>VERSION</version>
 </dependency>
 ```
 
-#### Gradle
-
+#### Gradle (Groovy)
 ```groovy
 dependencies {
-    implementation 'net.insprill:spigot-utils:version'
+    implementation 'net.insprill:spigot-utils:VERSION'
+}
+```
+
+#### Gradle (Kotlin)
+```kotlin
+dependencies {
+    implementation("net.insprill:spigot-utils:VERSION")
 }
 ```
 
