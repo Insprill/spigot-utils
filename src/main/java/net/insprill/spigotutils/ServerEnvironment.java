@@ -91,7 +91,15 @@ public class ServerEnvironment {
      * @return Whether the server is running the given environment, or a fork of it.
      */
     public static boolean isAtLeast(ServerEnvironment environment) {
-        return ServerEnvironment.currentEnvironment.getOrdinal() >= environment.getOrdinal();
+        return getCurrentEnvironment().getOrdinal() >= environment.getOrdinal();
+    }
+
+    /**
+     * @param environment The environment to check.
+     * @return Whether the server is running an environment lower than the once specified.
+     */
+    public static boolean isLowerThan(ServerEnvironment environment) {
+        return getCurrentEnvironment().getOrdinal() < environment.getOrdinal();
     }
 
 }
