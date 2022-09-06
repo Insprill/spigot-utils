@@ -13,7 +13,7 @@ public class ServerEnvironment {
     /**
      * <a href="https://dev.bukkit.org/">https://dev.bukkit.org/</a>
      */
-    public static final ServerEnvironment BUKKIT = new ServerEnvironment("", 0);
+    public static final ServerEnvironment BUKKIT = new ServerEnvironment("org.bukkit.Bukkit", 0);
     /**
      * <a href="https://www.spigotmc.org/">https://www.spigotmc.org/</a>
      */
