@@ -76,6 +76,7 @@ public class MinecraftVersion {
     // endregion
 
     @Getter
+    @NotNull
     private static final MinecraftVersion currentVersion;
 
     static {
