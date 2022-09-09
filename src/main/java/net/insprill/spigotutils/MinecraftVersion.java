@@ -203,7 +203,7 @@ public class MinecraftVersion {
      *
      * @param version The version to check
      */
-    private static void checkNotNull(MinecraftVersion version) {
+    private static void checkNotNull(@Nullable MinecraftVersion version) {
         Preconditions.checkNotNull(version, "Version cannot be null");
     }
 
