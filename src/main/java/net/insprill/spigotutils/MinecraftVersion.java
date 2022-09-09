@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("unused")
 public class MinecraftVersion {
 
-    private static final Pattern versionPattern = Pattern.compile("(?i)\\(MC: (\\d)\\.(\\d+)\\.?(\\d+?)?\\)");
+    private static final Pattern versionPattern = Pattern.compile("(?i)(?<major>\\d)\\.(?<minor>\\d+)\\.?(?<patch>\\d+)?");
 
     // region Versions
     public static final MinecraftVersion v1_8_0 = new MinecraftVersion(8, 0);
