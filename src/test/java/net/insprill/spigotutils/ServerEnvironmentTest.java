@@ -13,13 +13,18 @@ class ServerEnvironmentTest {
     }
 
     @Test
-    void isSpigot_False() {
-        assertFalse(ServerEnvironment.isSpigot());
+    void isSpigot_True() {
+        assertTrue(ServerEnvironment.isSpigot());
     }
 
     @Test
-    void isPaper_False() {
-        assertFalse(ServerEnvironment.isPaper());
+    void isPaper_True() {
+        assertTrue(ServerEnvironment.isPaper());
+    }
+
+    @Test
+    void isMockBukkit_True() {
+        assertTrue(ServerEnvironment.isMockBukkit());
     }
 
     @Test
@@ -33,13 +38,13 @@ class ServerEnvironmentTest {
     }
 
     @Test
-    void isAtLeast_Spigot_False() {
-        assertFalse(ServerEnvironment.isAtLeast(ServerEnvironment.SPIGOT));
+    void isAtLeast_Spigot_True() {
+        assertTrue(ServerEnvironment.isAtLeast(ServerEnvironment.SPIGOT));
     }
 
     @Test
-    void isAtLeast_Paper_False() {
-        assertFalse(ServerEnvironment.isAtLeast(ServerEnvironment.PAPER));
+    void isAtLeast_Paper_True() {
+        assertTrue(ServerEnvironment.isAtLeast(ServerEnvironment.PAPER));
     }
 
     @Test

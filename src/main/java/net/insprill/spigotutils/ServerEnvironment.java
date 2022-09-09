@@ -26,6 +26,10 @@ public class ServerEnvironment {
      */
     public static final ServerEnvironment PAPER = new ServerEnvironment("com.destroystokyo.paper.PaperConfig", 2);
     /**
+     * <a href="https://github.com/MockBukkit/MockBukkit">https://github.com/MockBukkit/MockBukkit</a>
+     */
+    public static final ServerEnvironment MOCK_BUKKIT = new ServerEnvironment("be.seeseemelk.mockbukkit.ServerMock", 2); // Implements Paper
+    /**
      * <a href="https://purpurmc.org/">https://purpurmc.org/</a>
      */
     public static final ServerEnvironment PURPUR = new ServerEnvironment("org.purpurmc.purpur.PurpurConfig", 3);
@@ -65,6 +69,13 @@ public class ServerEnvironment {
      */
     public static boolean isPurpur() {
         return isAtLeast(ServerEnvironment.PURPUR);
+    }
+
+    /**
+     * @return Whether the server is MockBukkit's ServerMock
+     */
+    public static boolean isMockBukkit() {
+        return ServerEnvironment.MOCK_BUKKIT.isCurrentEnvironment;
     }
 
     /**
