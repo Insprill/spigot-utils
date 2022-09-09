@@ -179,10 +179,7 @@ public class MinecraftVersion {
      */
     public static @Nullable String getCraftBukkitVersion() {
         String[] pckg = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
-        if (pckg.length >= 4) {
-            return pckg[3];
-        }
-        return null;
+        return (pckg.length >= 4) ? pckg[3] : null;
     }
 
     /**
