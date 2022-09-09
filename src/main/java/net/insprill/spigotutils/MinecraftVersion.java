@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 @ToString
 @AllArgsConstructor
 @EqualsAndHashCode
+@SuppressWarnings("unused")
 public class MinecraftVersion {
 
     private static final Pattern versionPattern = Pattern.compile("(?i)\\(MC: (\\d)\\.(\\d+)\\.?(\\d+?)?\\)");
