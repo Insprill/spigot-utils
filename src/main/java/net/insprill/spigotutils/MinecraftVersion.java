@@ -86,12 +86,11 @@ public class MinecraftVersion {
 
         Matcher matcher = versionPattern.matcher(Bukkit.getVersion());
         if (matcher.find()) {
-            MatchResult matchResult = matcher.toMatchResult();
-            if (matchResult.groupCount() >= 2) {
-                major = parseIntSafe(matchResult.group(2));
+            if (matcher.groupCount() >= 2) {
+                major = parseIntSafe(matcher.group("minor"));
             }
-            if (matchResult.groupCount() >= 3) {
-                patch = parseIntSafe(matchResult.group(3));
+            if (matcher.groupCount() >= 3) {
+                patch = parseIntSafe(matcher.group("patch"));
             }
         }
 
