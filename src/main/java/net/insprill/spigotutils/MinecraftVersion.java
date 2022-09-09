@@ -9,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,7 +83,17 @@ public class MinecraftVersion {
         int major = 0;
         int patch = 0;
 
-        Matcher matcher = versionPattern.matcher(Bukkit.getVersion());
+        String versionStr = Bukkit.getVersion();
+
+        // Attempt to get version from
+        if (ServerEnvironment.isPaper()) {
+            try {
+                versionStr = (String) Bukkit.getServer().getClass().getMethod("getMinecraftVersion").invoke(Bukkit.getServer());
+            } catch (Exception ignored) {
+            }
+        }
+
+        Matcher matcher = versionPattern.matcher(versionStr);
         if (matcher.find()) {
             if (matcher.groupCount() >= 2) {
                 major = parseIntSafe(matcher.group("minor"));
