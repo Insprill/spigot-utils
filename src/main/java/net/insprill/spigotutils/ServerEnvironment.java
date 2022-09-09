@@ -75,7 +75,7 @@ public class ServerEnvironment {
      * @return Whether the server is MockBukkit's ServerMock
      */
     public static boolean isMockBukkit() {
-        return ServerEnvironment.MOCK_BUKKIT.isCurrentEnvironment;
+        return ServerEnvironment.MOCK_BUKKIT.isCurrentEnvironment();
     }
 
     /**
