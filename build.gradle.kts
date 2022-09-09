@@ -11,7 +11,7 @@ version = property("version")!!
 
 repositories {
     mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/") // spigot-api, MockBukkit
+    maven("https://repo.papermc.io/repository/maven-public/") // Spigot-API, MockBukkit
 }
 
 dependencies {
