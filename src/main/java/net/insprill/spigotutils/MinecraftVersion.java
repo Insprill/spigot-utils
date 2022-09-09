@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.ToString;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
