@@ -28,6 +28,11 @@ class ServerEnvironmentTest {
     }
 
     @Test
+    void isFolia_Fale() {
+        assertFalse(ServerEnvironment.isFolia());
+    }
+
+    @Test
     void isPurpur_False() {
         assertFalse(ServerEnvironment.isPurpur());
     }
@@ -45,6 +50,11 @@ class ServerEnvironmentTest {
     @Test
     void isAtLeast_Paper_True() {
         assertTrue(ServerEnvironment.isAtLeast(ServerEnvironment.PAPER));
+    }
+
+    @Test
+    void isAtLeast_Folia_False() {
+        assertFalse(ServerEnvironment.isAtLeast(ServerEnvironment.FOLIA));
     }
 
     @Test

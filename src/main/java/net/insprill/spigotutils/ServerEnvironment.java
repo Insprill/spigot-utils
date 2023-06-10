@@ -2,56 +2,69 @@ package net.insprill.spigotutils;
 
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Used to check the environment the server is running.
  * Useful when different environments require different implementations.
  */
+@EqualsAndHashCode
 public class ServerEnvironment {
 
     // region Environments
     /**
-     * <a href="https://dev.bukkit.org/">https://dev.bukkit.org/</a>
+     * <a href="https://purpurmc.org/">https://purpurmc.org/</a>
      */
-    public static final ServerEnvironment BUKKIT = new ServerEnvironment("org.bukkit.Bukkit", 0);
+    public static final ServerEnvironment PURPUR = new ServerEnvironment("org.purpurmc.purpur.PurpurConfig");
     /**
-     * <a href="https://www.spigotmc.org/">https://www.spigotmc.org/</a>
+     * <a href="https://papermc.io/software/folia">https://papermc.io/software/folia</a>
      */
-    public static final ServerEnvironment SPIGOT = new ServerEnvironment("org.spigotmc.SpigotConfig", 1);
-    /**
-     * <a href="https://papermc.io/">https://papermc.io/</a>
-     */
-    public static final ServerEnvironment PAPER = new ServerEnvironment("com.destroystokyo.paper.PaperConfig", 2);
+    public static final ServerEnvironment FOLIA = new ServerEnvironment("io.papermc.paper.threadedregions.scheduler.FoliaRegionScheduler");
     /**
      * <a href="https://github.com/MockBukkit/MockBukkit">https://github.com/MockBukkit/MockBukkit</a>
      */
-    public static final ServerEnvironment MOCK_BUKKIT = new ServerEnvironment("be.seeseemelk.mockbukkit.ServerMock", 2); // Implements Paper
+    public static final ServerEnvironment MOCK_BUKKIT = new ServerEnvironment("be.seeseemelk.mockbukkit.ServerMock"); // Implements Paper
     /**
-     * <a href="https://purpurmc.org/">https://purpurmc.org/</a>
+     * <a href="https://papermc.io/">https://papermc.io/</a>
      */
-    public static final ServerEnvironment PURPUR = new ServerEnvironment("org.purpurmc.purpur.PurpurConfig", 3);
+    public static final ServerEnvironment PAPER = new ServerEnvironment("com.destroystokyo.paper.PaperConfig", MOCK_BUKKIT, FOLIA, PURPUR);
+    /**
+     * <a href="https://www.spigotmc.org/">https://www.spigotmc.org/</a>
+     */
+    public static final ServerEnvironment SPIGOT = new ServerEnvironment("org.spigotmc.SpigotConfig", PAPER);
+    /**
+     * <a href="https://dev.bukkit.org/">https://dev.bukkit.org/</a>
+     */
+    public static final ServerEnvironment BUKKIT = new ServerEnvironment("org.bukkit.Bukkit", SPIGOT);
     // endregion
 
+    private final String checkClass;
+    @EqualsAndHashCode.Exclude
+    private final List<ServerEnvironment> downstreams;
     @Getter
-    private final int ordinal;
-    @Getter
+    @EqualsAndHashCode.Exclude
     private boolean isCurrentEnvironment;
 
     /**
-     * @param checkClass The class to check for to see if the server is running the given environment.
-     * @param ordinal    The ordinal of the environment, or fork level. (Bukkit is 0, Spigot is 1, Paper is 2, etc).
+     * @param checkClass  The class to check for to see if the server is running the given environment.
+     * @param downstreams All ServerEnvironments that are directly downstream (forks) of this one.
      */
-    public ServerEnvironment(@NotNull String checkClass, int ordinal) {
+    public ServerEnvironment(@NotNull String checkClass, ServerEnvironment... downstreams) {
         Preconditions.checkNotNull(checkClass, "Check class cannot be null");
-        this.ordinal = ordinal;
+        this.checkClass = checkClass;
+        this.downstreams = Arrays.asList(downstreams);
         try {
             Class.forName(checkClass);
             this.isCurrentEnvironment = true;
             // Will be null on the first call until initialized.
-            if (getCurrentEnvironment() == null || ordinal > getCurrentEnvironment().getOrdinal()) {
+            //noinspection ConstantValue
+            if (getCurrentEnvironment() == null || isAtLeast(this)) {
                 setCurrentEnvironment(this);
             }
         } catch (ClassNotFoundException e) {
@@ -81,6 +94,13 @@ public class ServerEnvironment {
     /**
      * @return Whether the server is running Paper, or a fork of it.
      */
+    public static boolean isFolia() {
+        return isAtLeast(ServerEnvironment.FOLIA);
+    }
+
+    /**
+     * @return Whether the server is running Paper, or a fork of it.
+     */
     public static boolean isPaper() {
         return isAtLeast(ServerEnvironment.PAPER);
     }
@@ -105,7 +125,8 @@ public class ServerEnvironment {
      */
     public static boolean isAtLeast(@NotNull ServerEnvironment environment) {
         Preconditions.checkNotNull(environment, "Environment cannot be null");
-        return getCurrentEnvironment().getOrdinal() >= environment.getOrdinal();
+        ServerEnvironment env = getCurrentEnvironment();
+        return env.equals(environment) || environment.downstreams.stream().anyMatch((e) -> isAtLeast(env));
     }
 
     /**
@@ -113,8 +134,7 @@ public class ServerEnvironment {
      * @return Whether the server is running an environment lower than the once specified.
      */
     public static boolean isLowerThan(@NotNull ServerEnvironment environment) {
-        Preconditions.checkNotNull(environment, "Environment cannot be null");
-        return getCurrentEnvironment().getOrdinal() < environment.getOrdinal();
+        return !isAtLeast(environment);
     }
 
 }
