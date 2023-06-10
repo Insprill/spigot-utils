@@ -1,10 +1,14 @@
 package net.insprill.spigotutils;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
+import lombok.SneakyThrows;
 import org.bukkit.craftbukkit.v1_18_R2.CraftServerMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,14 +17,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MinecraftVersionTest {
 
+    private MinecraftVersion originalVersion;
+
     @BeforeEach
+    @SneakyThrows
     void setUp() {
         MockBukkit.mock();
+        // These tests were written assuming 1.18.2. We have to set it back to that so we can update MockBukkit.
+        this.originalVersion = MinecraftVersion.getCurrentVersion();
+        setCurrentVersion(new MinecraftVersion(18, 2));
     }
 
+    @SneakyThrows
     @AfterEach
     void teardown() {
         MockBukkit.unmock();
+        setCurrentVersion(this.originalVersion);
     }
 
     @Test
@@ -172,6 +184,16 @@ class MinecraftVersionTest {
         MockBukkit.unmock();
         MockBukkit.mock(new CraftServerMock());
         assertEquals("v1_18_R2", MinecraftVersion.getCraftBukkitVersion());
+    }
+
+    private static void setCurrentVersion(MinecraftVersion version) throws ReflectiveOperationException {
+        final Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
+        unsafeField.setAccessible(true);
+        final Unsafe unsafe = (Unsafe) unsafeField.get(null);
+        Field currentVersion = MinecraftVersion.class.getDeclaredField("currentVersion");
+        final Object staticFieldBase = unsafe.staticFieldBase(currentVersion);
+        final long staticFieldOffset = unsafe.staticFieldOffset(currentVersion);
+        unsafe.putObject(staticFieldBase, staticFieldOffset, version);
     }
 
 }
