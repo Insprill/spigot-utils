@@ -2,7 +2,7 @@ plugins {
     id("java")
     id("signing")
     id("maven-publish")
-    id("io.freefair.lombok") version "8.0.1"
+    id("io.freefair.lombok") version "8.4"
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
@@ -16,11 +16,11 @@ repositories {
 
 dependencies {
     compileOnly("org.jetbrains:annotations:24.0.1")
-    compileOnly("org.spigotmc:spigot-api:1.20-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT")
 
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:3.1.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.44.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
 }
 
 tasks {
