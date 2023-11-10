@@ -76,6 +76,8 @@ public class MinecraftVersion {
     public static final MinecraftVersion v1_19_3 = new MinecraftVersion(19, 3);
     public static final MinecraftVersion v1_19_4 = new MinecraftVersion(19, 4);
     public static final MinecraftVersion v1_20_0 = new MinecraftVersion(20, 0);
+    public static final MinecraftVersion v1_20_1 = new MinecraftVersion(20, 1);
+    public static final MinecraftVersion v1_20_2 = new MinecraftVersion(20, 2);
     // endregion
 
     @Getter
