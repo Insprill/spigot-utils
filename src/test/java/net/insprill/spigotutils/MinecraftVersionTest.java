@@ -55,6 +55,20 @@ class MinecraftVersionTest {
     }
 
     @Test
+    void getDisplayName_NoPatch_IncludeEmptyPatch() {
+        MinecraftVersion version = new MinecraftVersion(19, 0);
+
+        assertEquals("1.19.0", version.getDisplayName(true));
+    }
+
+    @Test
+    void getDisplayName_WithPatch_IncludeEmptyPatch() {
+        MinecraftVersion version = new MinecraftVersion(19, 1);
+
+        assertEquals("1.19.1", version.getDisplayName(true));
+    }
+
+    @Test
     void isNew_NewerThanOneDotThirteen_True() {
         assertTrue(MinecraftVersion.isNew());
     }

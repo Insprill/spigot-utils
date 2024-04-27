@@ -136,7 +136,18 @@ public class MinecraftVersion {
      */
     @NotNull
     public String getDisplayName() {
-        return "1." + major + ((patch == 0) ? "" : "." + patch);
+        return getDisplayName(false);
+    }
+
+    /**
+     * Gets the display name of a version. E.g. "1.8.8", "1.18", or "1.18.0". Ignores pre-release versions.
+     *
+     * @param includeEmptyPatch Whether to include the patch version if it's 0. (e.g. "1.8.0" vs "1.8")
+     * @return The display name of the version.
+     */
+    @NotNull
+    public String getDisplayName(boolean includeEmptyPatch) {
+        return "1." + major + ((patch == 0 && !includeEmptyPatch) ? "" : "." + patch);
     }
 
     /**
