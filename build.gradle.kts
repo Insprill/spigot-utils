@@ -2,8 +2,8 @@ plugins {
     id("java")
     id("signing")
     id("maven-publish")
-    id("io.freefair.lombok") version "8.4"
-    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+    id("io.freefair.lombok") version "8.6"
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
 }
 
 group = "net.insprill"
@@ -15,12 +15,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.jetbrains:annotations:24.0.1")
-    compileOnly("org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT")
+    compileOnly("org.jetbrains:annotations:24.1.0")
+    compileOnly("org.spigotmc:spigot-api:1.20.5-R0.1-SNAPSHOT")
 
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.44.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.86.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
 }
 
 tasks {
