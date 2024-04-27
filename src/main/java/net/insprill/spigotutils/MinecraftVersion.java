@@ -195,7 +195,11 @@ public class MinecraftVersion {
      * Attempts to get the CraftBukkit version from the server implementation's package name.
      *
      * @return The CraftBukkit version, or null if it could not be determined.
+     * @deprecated Paper no longer includes the version in the CraftBukkit package name.
+     * Using this on Paper 1.20.5 and newer will always return null.
+     * Use {@link #getCurrentVersion()} and {@link #getDisplayName()} instead.
      */
+    @Deprecated
     public static @Nullable String getCraftBukkitVersion() {
         String[] pckg = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
         return (pckg.length >= 4) ? pckg[3] : null;
