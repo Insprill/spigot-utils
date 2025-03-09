@@ -1,6 +1,5 @@
 package net.insprill.spigotutils;
 
-import lombok.SneakyThrows;
 import org.bukkit.craftbukkit.v1_18_R2.CraftServerMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +19,6 @@ class MinecraftVersionTest {
     private MinecraftVersion originalVersion;
 
     @BeforeEach
-    @SneakyThrows
     void setUp() {
         MockBukkit.mock();
         // These tests were written assuming 1.18.2. We have to set it back to that so we can update MockBukkit.
@@ -28,7 +26,6 @@ class MinecraftVersionTest {
         setCurrentVersion(new MinecraftVersion(18, 2));
     }
 
-    @SneakyThrows
     @AfterEach
     void teardown() {
         MockBukkit.unmock();
@@ -203,14 +200,18 @@ class MinecraftVersionTest {
     }
 
     @SuppressWarnings("deprecation")
-    private static void setCurrentVersion(MinecraftVersion version) throws ReflectiveOperationException {
-        final Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
-        unsafeField.setAccessible(true);
-        final Unsafe unsafe = (Unsafe) unsafeField.get(null);
-        Field currentVersion = MinecraftVersion.class.getDeclaredField("currentVersion");
-        final Object staticFieldBase = unsafe.staticFieldBase(currentVersion);
-        final long staticFieldOffset = unsafe.staticFieldOffset(currentVersion);
-        unsafe.putObject(staticFieldBase, staticFieldOffset, version);
+    private static void setCurrentVersion(MinecraftVersion version) {
+        try {
+            final Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
+            unsafeField.setAccessible(true);
+            final Unsafe unsafe = (Unsafe) unsafeField.get(null);
+            Field currentVersion = MinecraftVersion.class.getDeclaredField("currentVersion");
+            final Object staticFieldBase = unsafe.staticFieldBase(currentVersion);
+            final long staticFieldOffset = unsafe.staticFieldOffset(currentVersion);
+            unsafe.putObject(staticFieldBase, staticFieldOffset, version);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

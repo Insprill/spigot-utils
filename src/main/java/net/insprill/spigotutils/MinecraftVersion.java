@@ -1,10 +1,6 @@
 package net.insprill.spigotutils;
 
 import com.google.common.base.Preconditions;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,9 +12,6 @@ import java.util.regex.Pattern;
  * Used to check the Minecraft version the server is running.
  * Useful when different Minecraft versions require different implementations.
  */
-@ToString
-@AllArgsConstructor
-@EqualsAndHashCode
 @SuppressWarnings("unused")
 public class MinecraftVersion {
 
@@ -90,9 +83,13 @@ public class MinecraftVersion {
     public static final MinecraftVersion v1_22_0 = new MinecraftVersion(22, 0);
     // endregion
 
-    @Getter
     @NotNull
     private static final MinecraftVersion currentVersion;
+
+    @NotNull
+    public static MinecraftVersion getCurrentVersion() {
+        return currentVersion;
+    }
 
     static {
         int major = 0;
@@ -129,10 +126,21 @@ public class MinecraftVersion {
         currentVersion = new MinecraftVersion(major, patch);
     }
 
-    @Getter
     private final int major;
-    @Getter
     private final int patch;
+
+    public MinecraftVersion(int major, int patch) {
+        this.major = major;
+        this.patch = patch;
+    }
+
+    public int getMajor() {
+        return major;
+    }
+
+    public int getPatch() {
+        return patch;
+    }
 
     /**
      * Gets the display name of a version. E.g. "1.8.8" or "1.18". Ignores pre-release versions.
@@ -244,6 +252,26 @@ public class MinecraftVersion {
      */
     private static void checkNotNull(@Nullable MinecraftVersion version) {
         Preconditions.checkNotNull(version, "Version cannot be null");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof MinecraftVersion)) return false;
+        MinecraftVersion other = (MinecraftVersion) o;
+        return major == other.major && patch == other.patch;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 31;
+        result = 31 * result + major;
+        result = 31 * result + patch;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MinecraftVersion(major=" + this.getMajor() + ", patch=" + this.getPatch() + ")";
     }
 
 }

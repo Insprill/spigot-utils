@@ -2,7 +2,6 @@ plugins {
     id("java")
     id("signing")
     id("maven-publish")
-    id("io.freefair.lombok") version "8.12.2.1"
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
 }
 
