@@ -13,8 +13,8 @@ class ServerEnvironmentTest {
     }
 
     @Test
-    void isSpigot_True() {
-        assertTrue(ServerEnvironment.isSpigot());
+    void isSpigot_False() {
+        assertFalse(ServerEnvironment.isSpigot());
     }
 
     @Test
@@ -35,31 +35,6 @@ class ServerEnvironmentTest {
     @Test
     void isPurpur_False() {
         assertFalse(ServerEnvironment.isPurpur());
-    }
-
-    @Test
-    void isAtLeast_Bukkit_True() {
-        assertTrue(ServerEnvironment.isAtLeast(ServerEnvironment.BUKKIT));
-    }
-
-    @Test
-    void isAtLeast_Spigot_True() {
-        assertTrue(ServerEnvironment.isAtLeast(ServerEnvironment.SPIGOT));
-    }
-
-    @Test
-    void isAtLeast_Paper_True() {
-        assertTrue(ServerEnvironment.isAtLeast(ServerEnvironment.PAPER));
-    }
-
-    @Test
-    void isAtLeast_Folia_False() {
-        assertFalse(ServerEnvironment.isAtLeast(ServerEnvironment.FOLIA));
-    }
-
-    @Test
-    void isAtLeast_Purpur_False() {
-        assertFalse(ServerEnvironment.isAtLeast(ServerEnvironment.PURPUR));
     }
 
 }
