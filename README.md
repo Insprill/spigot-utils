@@ -10,7 +10,7 @@
 <p align="center">
   A small library of commonly used functions in Spigot plugins
   <br />
-  <a href="https://insprill.net/javadocs/spigot-utils"><strong>View Javadocs »</strong></a>
+  <a href="https://javadoc.io/doc/net.insprill/spigot-utils"><strong>View Javadocs »</strong></a>
   <br />
   <br />
   <a href="https://github.com/Insprill/spigot-utils/issues">Report Bugs</a>
@@ -68,7 +68,7 @@ dependencies {
 
 ## Compiling
 
-To compile spigot-utils, you need JDK 17 or higher and an internet connection.  
+To compile spigot-utils, you need JDK 21 or higher and an internet connection.  
 Clone this repo, then run `./gradlew build` from your terminal.  
 You can find the compiled jar in the `build/libs` directory.  
 If you wish to install it to your local Maven repository, run `./gradlew publishToMavenLocal` after compiling.
