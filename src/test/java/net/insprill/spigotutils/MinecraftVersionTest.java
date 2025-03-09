@@ -1,12 +1,5 @@
 package net.insprill.spigotutils;
 
-import java.lang.reflect.Field;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import lombok.SneakyThrows;
 import org.bukkit.craftbukkit.v1_18_R2.CraftServerMock;
 import org.junit.jupiter.api.AfterEach;
@@ -14,6 +7,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockbukkit.mockbukkit.MockBukkit;
 import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MinecraftVersionTest {
 
@@ -202,6 +202,7 @@ class MinecraftVersionTest {
         assertEquals("v1_18_R2", MinecraftVersion.getCraftBukkitVersion());
     }
 
+    @SuppressWarnings("deprecation")
     private static void setCurrentVersion(MinecraftVersion version) throws ReflectiveOperationException {
         final Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
         unsafeField.setAccessible(true);
