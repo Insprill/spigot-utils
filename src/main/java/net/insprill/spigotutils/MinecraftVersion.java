@@ -216,6 +216,7 @@ public class MinecraftVersion {
      * Use {@link #getCurrentVersion()} and {@link #getDisplayName()} instead.
      */
     @Deprecated
+    @SuppressWarnings("DeprecatedIsStillUsed")
     public static @Nullable String getCraftBukkitVersion() {
         String[] pckg = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
         return (pckg.length >= 4) ? pckg[3] : null;
