@@ -92,7 +92,7 @@ public class ServerEnvironment {
     }
 
     /**
-     * @return Whether the server is running Paper, or a fork of it.
+     * @return Whether the server is running Folia, or a fork of it.
      */
     public static boolean isFolia() {
         return isAtLeast(ServerEnvironment.FOLIA);
