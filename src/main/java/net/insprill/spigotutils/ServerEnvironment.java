@@ -29,7 +29,7 @@ public class ServerEnvironment {
     /**
      * <a href="https://github.com/MockBukkit/MockBukkit">https://github.com/MockBukkit/MockBukkit</a>
      */
-    public static final ServerEnvironment MOCK_BUKKIT = new ServerEnvironment("be.seeseemelk.mockbukkit.ServerMock"); // Implements Paper
+    public static final ServerEnvironment MOCK_BUKKIT = new ServerEnvironment("org.mockbukkit.mockbukkit.ServerMock"); // Implements Paper
     /**
      * <a href="https://papermc.io/">https://papermc.io/</a>
      */

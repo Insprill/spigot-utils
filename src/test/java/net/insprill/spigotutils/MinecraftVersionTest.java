@@ -1,19 +1,19 @@
 package net.insprill.spigotutils;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import lombok.SneakyThrows;
-import org.bukkit.craftbukkit.v1_18_R2.CraftServerMock;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import sun.misc.Unsafe;
-
 import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import lombok.SneakyThrows;
+import org.bukkit.craftbukkit.v1_18_R2.CraftServerMock;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import sun.misc.Unsafe;
 
 class MinecraftVersionTest {
 
@@ -189,11 +189,13 @@ class MinecraftVersionTest {
     // endregion
 
     @Test
+    @SuppressWarnings("deprecation")
     void getCraftBukkitVersion_CannotFind_Null() {
         assertNull(MinecraftVersion.getCraftBukkitVersion());
     }
 
     @Test
+    @SuppressWarnings("deprecation")
     void getCraftBukkitVersion_CorrectVersion() {
         MockBukkit.unmock();
         MockBukkit.mock(new CraftServerMock());
