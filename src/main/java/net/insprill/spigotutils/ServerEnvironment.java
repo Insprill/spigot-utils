@@ -17,7 +17,7 @@ public enum ServerEnvironment {
     /**
      * <a href="https://papermc.io/software/folia">https://papermc.io/software/folia</a>
      */
-    FOLIA("io.papermc.paper.threadedregions.scheduler.FoliaRegionScheduler", "ca.spottedleaf.moonrise.common.util.TickThread"),
+    FOLIA("io.papermc.paper.threadedregions.scheduler.FoliaRegionScheduler"),
     /**
      * <a href="https://github.com/MockBukkit/MockBukkit">https://github.com/MockBukkit/MockBukkit</a>
      */
