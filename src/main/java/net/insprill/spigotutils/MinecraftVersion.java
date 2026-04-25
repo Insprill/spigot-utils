@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("unused")
 public class MinecraftVersion {
 
-    private static final Pattern versionPattern = Pattern.compile("(?i)(?<major>\\d)\\.(?<minor>\\d+)\\.?(?<patch>\\d+)?");
+    private static final Pattern versionPattern = Pattern.compile("(?i)(?<major>\\d+)\\.(?<minor>\\d+)\\.?(?<patch>\\d+)?");
 
     // region Versions
     public static final MinecraftVersion v1_8_0 = new MinecraftVersion(8, 0);
@@ -80,7 +80,14 @@ public class MinecraftVersion {
     public static final MinecraftVersion v1_21_2 = new MinecraftVersion(21, 2);
     public static final MinecraftVersion v1_21_3 = new MinecraftVersion(21, 3);
     public static final MinecraftVersion v1_21_4 = new MinecraftVersion(21, 4);
-    public static final MinecraftVersion v1_22_0 = new MinecraftVersion(22, 0);
+    public static final MinecraftVersion v1_21_5 = new MinecraftVersion(21, 5);
+    public static final MinecraftVersion v1_21_6 = new MinecraftVersion(21, 6);
+    public static final MinecraftVersion v1_21_7 = new MinecraftVersion(21, 7);
+    public static final MinecraftVersion v1_21_8 = new MinecraftVersion(21, 8);
+    public static final MinecraftVersion v1_21_9 = new MinecraftVersion(21, 9);
+    public static final MinecraftVersion v1_21_10 = new MinecraftVersion(21, 10);
+    public static final MinecraftVersion v1_21_11 = new MinecraftVersion(21, 11);
+    public static final MinecraftVersion v26_1 = new MinecraftVersion(26, 1);
     // endregion
 
     @NotNull
@@ -92,7 +99,9 @@ public class MinecraftVersion {
     }
 
     static {
-        int major = 0;
+        boolean isNewVersioning = false;
+        int major = 1;
+        int minor = 0;
         int patch = 0;
 
         String versionStr = Bukkit.getVersion();
@@ -107,8 +116,11 @@ public class MinecraftVersion {
 
         Matcher matcher = versionPattern.matcher(versionStr);
         if (matcher.find()) {
+            if (matcher.groupCount() >= 1) {
+                major = parseIntSafe(matcher.group("major"));
+            }
             if (matcher.groupCount() >= 2) {
-                major = parseIntSafe(matcher.group("minor"));
+                minor = parseIntSafe(matcher.group("minor"));
             }
             if (matcher.groupCount() >= 3) {
                 patch = parseIntSafe(matcher.group("patch"));
@@ -116,14 +128,18 @@ public class MinecraftVersion {
         }
 
         // Fallback to attempt to get major version.
-        if (major == 0 && getCraftBukkitVersion() != null) {
+        if (minor == 0 && getCraftBukkitVersion() != null) {
             String[] version = getCraftBukkitVersion().split("_");
             if (version.length >= 2) {
-                major = parseIntSafe(version[1]);
+                minor = parseIntSafe(version[1]);
             }
         }
 
-        currentVersion = new MinecraftVersion(major, patch);
+        if (major > 1) {
+            currentVersion = new MinecraftVersion(major, minor);
+        } else {
+            currentVersion = new MinecraftVersion(minor, patch);
+        }
     }
 
     private final int major;
