@@ -160,6 +160,7 @@ public class MinecraftVersion {
 
     /**
      * Gets the display name of a version. E.g. "1.8.8" or "1.18". Ignores pre-release versions.
+     * For versions 26.1+, the patch number is not included.
      *
      * @return The display name of the version.
      */
@@ -170,13 +171,18 @@ public class MinecraftVersion {
 
     /**
      * Gets the display name of a version. E.g. "1.8.8", "1.18", or "1.18.0". Ignores pre-release versions.
+     * For versions 26.1+, the patch number is not included.
      *
-     * @param includeEmptyPatch Whether to include the patch version if it's 0. (e.g. "1.8.0" vs "1.8")
+     * @param includeEmptyPatch Whether to include the patch version if it's 0 (e.g. "1.8.0" vs "1.8"). Does not apply to 26.1+.
      * @return The display name of the version.
      */
     @NotNull
     public String getDisplayName(boolean includeEmptyPatch) {
-        return "1." + major + ((patch == 0 && !includeEmptyPatch) ? "" : "." + patch);
+        if (major >= 26) {
+            return major + "." + patch;
+        } else {
+            return "1." + major + ((patch == 0 && !includeEmptyPatch) ? "" : "." + patch);
+        }
     }
 
     /**
